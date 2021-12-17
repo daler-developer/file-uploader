@@ -1,0 +1,66 @@
+.profile-page {
+  & {
+    
+  }
+  &__icon {
+    display: block;
+  }
+  &__top-bar {
+    padding-bottom: 5px;
+    margin-top: 20px;
+    display: flex;
+    column-gap: 5px;
+    height: 40px;
+  }
+  &__search-input-wrapper {
+    padding: 0 5px;
+    border-radius: 3px;
+    flex: 1 0 0;
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+    font-size: 17px;
+    border: 1px solid rgba(0, 0, 0, 0.578);
+  }
+  &__search-icon {
+    font-size: 22px;
+  }
+  &__search-input {
+    align-self: stretch;
+  }
+  &__seperator {
+    margin-top: 5px;
+    height: 1px;
+    background-color: black;
+  }
+  &__posts {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+  &__post {
+    border: 1px solid rgba(0, 0, 0, 0.455);
+    height: 60px;
+  }
+  &__filter-btn, &__add-post-btn {
+    @include flex-center;
+    gap: 3px;
+    padding: 0 13px;
+    border-radius: 3px;
+    color: white;
+    font-weight: 500;
+    font-size: 17px;
+    transform: all .2s ease-in;
+
+    &:hover {
+      opacity: .9;
+    }
+  }
+  &__filter-btn {
+    background-color: rgb(24, 76, 198);
+  }
+  &__add-post-btn {
+    background-color: rgb(89, 145, 11);
+  }
+}

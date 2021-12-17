@@ -1,0 +1,24 @@
+.alert {
+  & {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0) scale(1);
+    bottom: 30px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: transform 0.2s linear;
+  }
+  &--success {
+    border: 1px solid #059669;
+    background-color: #D1FAE5;
+    color: #059669;
+  }
+  &--error {
+    border: 1px solid #B91C1C;
+    background-color: #FEE2E2;
+    color: #B91C1C;
+  }
+  &--hidden {
+    transform: translate(-50%, 0) scale(0);
+  }
+}
