@@ -62,9 +62,12 @@ export default ({}: Props) => {
 
         const firestoreImage: FirestorePost = {
           authorUid: currentUser!.uid,
-          imageUrl: imageUrl,
-          imagePath: path,
-          imageSize: file.metadata.size,
+          image: {
+            url: imageUrl,
+            size: file.metadata.size,
+            path: path,
+            createdAt: file.metadata.timeCreated
+          },
           likesCount: 0,
           desc: v.desc,
           isFavourite: false
@@ -77,9 +80,12 @@ export default ({}: Props) => {
           authorUid: currentUser!.uid,
           desc: v.desc,
           likesCount: 0,
-          imagePath: path,
-          imageUrl,
-          imageSize: file.metadata.size,
+          image: {
+            url: imageUrl,
+            size: file.metadata.size,
+            path: path,
+            createdAt: file.metadata.timeCreated
+          },
           isFavourite: false
         }))
 

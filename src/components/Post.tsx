@@ -20,24 +20,31 @@ type Props = {
 
 export default  ({ data, classes }: Props) => {
   const [isPopupHidden, setIsPopupHidden] = useState<boolean>(true)
+  const [isImgLoading, setIsImgLoading] = useState<boolean>(true)
 
   const dispatch = useAppDispatch()
 
   const currentUser = useAppSelector((state) => selectCurrentUser(state))
+
+  const getGeneratedCreatedDate = (): string => {
+    const date = new Date(Date.parse(data.image.createdAt))
+
+    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
+  }
 
   const handleOpenMenuBtnClick = () => {
     setIsPopupHidden(false)
   }
 
   const handleViewBtnClick = () => {
-    dispatch(commonActions.setImageViewingUrl(data.imageUrl))
+    dispatch(commonActions.setImageViewingUrl(data.image.url))
   }
 
   const handleDeletePostBtnClick = async () => {
     try {
       // update firebase state
       await deleteDoc(doc(db, 'posts', data.id))
-      await deleteObject(ref(storage, data.imagePath))
+      await deleteObject(ref(storage, data.image.path))
       
       // update redux state
       dispatch(postsActions.deletePost(data.id))
@@ -77,6 +84,10 @@ export default  ({ data, classes }: Props) => {
     dispatch(postsActions.removePostFavourite(data.id))
   }
 
+  const handleImgLoad = () => {
+    setIsImgLoading(false)
+  }
+
   return (
     <div className={classNames('post', classes?.root)} title={data.desc}>
 
@@ -84,10 +95,23 @@ export default  ({ data, classes }: Props) => {
 
         <div className="post__img-wrapper">
           <img
-            src={data.imageUrl}
+            src={data.image.url}
             alt="Image"
             className="post__img"
+            onLoad={handleImgLoad}
           />
+          {/* {isImgLoading ? (
+            <div className="post__img-loader">
+
+            </div>
+          ) : (
+            <img
+              src={data.image.url}
+              alt="Image"
+              className="post__img"
+              onLoad={handleImgLoad}
+            />
+          )} */}
           <button type="button" className="post__view-img-btn" onClick={handleViewBtnClick}>
             <span className="post__icon post__see-icon material-icons-outlined">
               visibility
@@ -101,12 +125,19 @@ export default  ({ data, classes }: Props) => {
           </p>
           <div className="post__meta-data">
             {'2.3 MB'}
+            <span className="post__dot" />
+            {getGeneratedCreatedDate()}
           </div>
         </div>
 
       </div>
 
       <div className="post__right">
+        <button type="button" className="post__download-btn post__download-img-btn">
+          <span className="post__icon material-icons-outlined">
+            download
+          </span>
+        </button>
         {data.isFavourite ? (
           <button className="post__icon post__heart-icon post__heart-filled-icon material-icons-outlined" onClick={handleRemoveFromFavoruteBtnClick}>
             favorite
@@ -127,18 +158,27 @@ export default  ({ data, classes }: Props) => {
         <ul className="post__popup-menu-btns">
           <li className="post__popup-menu-btns-item">
             <button className="post__popup-menu-btn" onClick={handleDeletePostBtnClick}>
+              <span className="post__icon post__popup-menu-icon material-icons-outlined">
+                delete
+              </span>
               Delete
             </button>
           </li>
           {!data.isFavourite ? (
             <li className="post__popup-menu-btns-item">
               <button className="post__popup-menu-btn" onClick={handleMoveToFavoruteBtnClick}>
+                <span className="post__icon post__popup-menu-icon material-icons-outlined">
+                  favorite_border
+                </span>
                 Move to favourite
               </button>
             </li>
           ) : (
             <li className="post__popup-menu-btns-item">
               <button className="post__popup-menu-btn" onClick={handleRemoveFromFavoruteBtnClick}>
+                <span className="post__icon post__popup-menu-icon material-icons-outlined">
+                  favorite_border
+                </span>
                 Remove from favourite
               </button>
             </li>

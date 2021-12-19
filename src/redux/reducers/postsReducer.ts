@@ -5,9 +5,12 @@ import { RootState } from 'redux/store'
 
 export type ReduxPost = {
   id: string,
-  imageUrl: string,
-  imagePath: string,
-  imageSize: number,
+  image: {
+    url: string,
+    path: string,
+    size: number,
+    createdAt: string
+  },
   likesCount: number,
   authorUid: string,
   desc: string,

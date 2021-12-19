@@ -30,10 +30,10 @@ export default (props: Props) => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         dispatch(authActions.login(user.providerData[0]))
-        // history.push('/profile')
+        history.push('/profile')
       } else {
         dispatch(authActions.logout())
-        // history.push('/auth?tab=login')
+        history.push('/auth?tab=login')
       }
     })
   }, [])

@@ -12,6 +12,29 @@
     column-gap: 5px;
     height: 40px;
   }
+  &__filter-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 100px;
+    color: rgb(0, 0, 0);
+  }
+  &__filter-menu-btns {
+    display: flex;
+    flex-direction: column;
+  }
+  &__filter-menu-btn {
+    white-space: nowrap;
+    text-align: start;
+    padding: 0 10px;
+    width: 100%;
+    height: 30px;
+    font-size: 15.5px;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.115);
+    }
+  }
   &__search-input-wrapper {
     padding: 0 5px;
     border-radius: 3px;
@@ -26,6 +49,7 @@
     font-size: 22px;
   }
   &__search-input {
+    flex: 1 0 0;
     align-self: stretch;
   }
   &__seperator {
@@ -52,6 +76,9 @@
   &__loading-title {
 
   }
+  &__filter-btn {
+    height: 100%;
+  }
   &__filter-btn, &__add-post-btn {
     @include flex-center;
     gap: 3px;
@@ -61,13 +88,15 @@
     font-weight: 500;
     font-size: 17px;
     transform: all .2s ease-in;
+    position: relative;
+    background-color: rgb(24, 76, 198);
 
     &:hover {
       opacity: .9;
     }
   }
-  &__filter-btn {
-    background-color: rgb(24, 76, 198);
+  &__filter-btn-wrapper {
+    position: relative;
   }
   &__add-post-btn {
     background-color: rgb(89, 145, 11);

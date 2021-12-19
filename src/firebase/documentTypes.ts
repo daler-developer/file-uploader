@@ -1,8 +1,11 @@
 
 export type FirestorePost = {
-  imageUrl: string,
-  imagePath: string,
-  imageSize: number,
+  image: {
+    url: string,
+    path: string,
+    size: number,
+    createdAt: string
+  },
   likesCount: number,
   authorUid: string,
   desc: string,

@@ -1,8 +1,8 @@
 .post {
   & {
     display: flex;
+    column-gap: 10px;
     padding: 5px;
-    justify-content: space-between;
     border-radius: 3px;
     position: relative;
   }
@@ -20,6 +20,11 @@
     &:hover .post__view-img-btn {
       visibility: visible;
     }
+  }
+  &__img-loader {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.741);
   }
   &__img {
     width: 100%;
@@ -39,6 +44,7 @@
     visibility: hidden;
   }
   &__left {
+    flex: 1 0 0;
     display: flex;
     column-gap: 5px;
   }
@@ -48,8 +54,17 @@
     justify-content: space-between;
   }
   &__meta-data {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
     font-size: 12px;
     color: grey;
+  }
+  &__dot {
+    border-radius: 50%;
+    width: 3px;
+    height: 3px;
+    background-color: grey;
   }
   &__desc {
     font-size: 14px;
@@ -76,13 +91,24 @@
   }
   &__popup-menu {
     min-width: 200px;
-    top: 0;
-    right: 0;
+    top: 5px;
+    right: 5px;
   }
   &__popup-menu-btn {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
     width: 100%;
     text-align: start;
     height: 30px;
-    padding: 0 5px;
+    padding: 0 12px;
+    font-size: 15.5px;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.115);
+    }
+  }
+  &__popup-menu-icon {
+    font-size: 20px;
   }
 }
