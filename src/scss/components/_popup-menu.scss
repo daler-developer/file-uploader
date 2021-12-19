@@ -1,0 +1,12 @@
+.popup-menu {
+  & {
+    position: absolute;
+    border-radius: 3px;
+    padding: 0px 0;
+    border: 1px solid #000;
+    background-color: white;
+  }
+  &--hidden {
+    visibility: hidden;
+  }
+}

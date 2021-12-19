@@ -41,7 +41,8 @@ export default  ({}: Props) => {
   const form = useFormik({
     initialValues: {
       email: '',
-      password: ''
+      password: '',
+      displayName: ''
     },
     validate(v) {
       const errors: FormikErrors<FormValues> = {}
@@ -49,6 +50,10 @@ export default  ({}: Props) => {
       if (!v.email.trim()) {
         errors.email = 'Empty email'
       }
+
+      // if (!v.displayName.trim() && getSelectedTab() === 'register') {
+      //   errors.displayName = 'Empty display name'
+      // }
 
       if (!v.password.trim()) {
         errors.password = 'Empty password'
@@ -63,6 +68,7 @@ export default  ({}: Props) => {
         if (getSelectedTab() === 'register') {
 
           await createUserWithEmailAndPassword(auth, v.email, v.password)
+
           dispatch(commonActions.openAlert({ type: 'success', text: 'Signed up' }))
 
         } else if (getSelectedTab() === 'login') {

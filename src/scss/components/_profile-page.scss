@@ -1,6 +1,6 @@
 .profile-page {
   & {
-    
+
   }
   &__icon {
     display: block;
@@ -43,6 +43,15 @@
     border: 1px solid rgba(0, 0, 0, 0.455);
     height: 60px;
   }
+  &__no-posts-title, &__loading-title {
+    margin-top: 20px;
+    font-size: 22px;
+    text-align: center;
+    user-select: none
+  }
+  &__loading-title {
+
+  }
   &__filter-btn, &__add-post-btn {
     @include flex-center;
     gap: 3px;
@@ -62,5 +71,17 @@
   }
   &__add-post-btn {
     background-color: rgb(89, 145, 11);
+  }
+  &__reload-btn {
+    @include flex-center;
+    @include push--auto;
+    margin-top: 20px;
+    border-radius: 50%;
+    border: 1px solid #000;
+    width: 50px;
+    height: 50px;
+  }
+  &__reload-icon {
+    font-size: 22px;
   }
 }

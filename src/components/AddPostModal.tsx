@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "utils/hooks"
 import { commonActions, selectCurrentVisibleModal } from "redux/reducers/commonReducer"
 import LoadingButton from "./LoadingButton"
 import Modal from "./Modal"
+import { postsActions } from "redux/reducers/postsReducer"
 
 type Props = {
 
@@ -52,22 +53,39 @@ export default ({}: Props) => {
       try {
         setIsLoading(true)
 
-        const imageRef = ref(storage, `images/${nanoid()}_${image!.name}`)
+        // update firestore state
+        const path = `images/${nanoid()}_${image!.name}`
+        const imageRef = ref(storage, path)
 
-        await uploadBytes(imageRef, image!)
+        const file = await uploadBytes(imageRef, image!)
+        const imageUrl = await getDownloadURL(imageRef)
 
         const firestoreImage: FirestorePost = {
           authorUid: currentUser!.uid,
-          imageUrl: await getDownloadURL(imageRef),
+          imageUrl: imageUrl,
+          imagePath: path,
+          imageSize: file.metadata.size,
           likesCount: 0,
           desc: v.desc,
           isFavourite: false
         }
+        const doc = await addDoc(collection(db, 'posts'), firestoreImage)
 
-        await addDoc(collection(db, 'posts'), firestoreImage)
+        // update redux state
+        dispatch(postsActions.addPost({
+          id: doc.id,
+          authorUid: currentUser!.uid,
+          desc: v.desc,
+          likesCount: 0,
+          imagePath: path,
+          imageUrl,
+          imageSize: file.metadata.size,
+          isFavourite: false
+        }))
 
         dispatch(commonActions.openAlert({ type: 'success', text: 'Success' }))
-      } catch {
+      } catch (e) {
+        console.log(e)
         dispatch(commonActions.openAlert({ type: 'error', text: 'Error' }))
       } finally {
         form.resetForm()
@@ -120,7 +138,7 @@ export default ({}: Props) => {
               src={URL.createObjectURL(image)}
               className="add-post-modal__selected-image"
             />
-            <button className="add-post-modal__remove-selected-image-btn" onClick={handleRemoveSelectedImageClick}>
+            <button type="button" className="add-post-modal__remove-selected-image-btn" onClick={handleRemoveSelectedImageClick}>
               Remove
             </button>
           </div>

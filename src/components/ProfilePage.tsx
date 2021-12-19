@@ -17,6 +17,7 @@ type Props = {
 
 export default  ({}: Props) => {
   const [searchInputValue, setSearchInputValue] = useState<string>('')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const dispatch = useAppDispatch()
 
@@ -27,19 +28,27 @@ export default  ({}: Props) => {
   }, [])
 
   const loadPosts = async () => {
-    const snapshot = await getDocs(collection(db, 'posts'))
+    try {
+      setIsLoading(true)
+      
+      const snapshot = await getDocs(collection(db, 'posts'))
 
-    const posts: ReduxPost[] = []
+      const posts: ReduxPost[] = []
 
-    snapshot.forEach((doc) => {
-      const data = doc.data() as FirestorePost
-      posts.push({
-        id: doc.id,
-        ...data
+      snapshot.forEach((doc) => {
+        const data = doc.data() as FirestorePost
+        posts.push({
+          id: doc.id,
+          ...data
+        })
       })
-    })
 
-    dispatch(postsActions.setPosts(posts))
+      dispatch(postsActions.setPosts(posts))
+    } catch {
+      dispatch(commonActions.openAlert({ type: 'error', text: 'Cannot load' }))
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const getFilteredPosts = () => {
@@ -48,6 +57,10 @@ export default  ({}: Props) => {
         return true
       }
     })
+  }
+
+  const handleReloadBtnClick = () => {
+    loadPosts()
   }
 
   const handleAddPostBtn = () => {
@@ -90,15 +103,32 @@ export default  ({}: Props) => {
 
       <div className="profile-page__seperator"></div>
 
-      <div className="profile-page__posts">
-        {getFilteredPosts().map((post) => (
-          <Post
-            key={post.id}
-            data={post}
-            classes={{ root: 'profile-page__post' }}
-          />
-        ))}
-      </div>
+      {isLoading ? (
+        <h3 className="profile-page__loading-title">Loading...</h3>
+      ) : (
+        <div className="profile-page__posts">
+          {getFilteredPosts().map((post) => (
+            <Post
+              key={post.id}
+              data={post}
+              classes={{ root: 'profile-page__post' }}
+            />
+          ))}
+        </div>
+      )}
+
+      {!isLoading && getFilteredPosts().length === 0 && (
+        <h3 className="profile-page__no-posts-title">No posts</h3>
+      )}
+
+      {!isLoading && (
+        <button type="button" className="profile-page__reload-btn" onClick={handleReloadBtnClick}>
+          <span className="profile-page__icon profile-page__reload-icon material-icons-outlined">
+            autorenew
+          </span>
+        </button>
+      )}
+      
     </Layout>
   </>
 }
