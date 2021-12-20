@@ -14,6 +14,7 @@ import ProfilePage from './ProfilePage'
 import UsersPage from './UsersPage'
 import AddPostModal from './AddPostModal'
 import Modal from './Modal'
+import AddCategoryModal from './AddCategoryModal'
 
 
 type Props = {
@@ -64,5 +65,6 @@ export default (props: Props) => {
     <ViewImage />
     <Alert />
     <AddPostModal />
+    <AddCategoryModal />
   </>
 }

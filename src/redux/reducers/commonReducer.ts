@@ -3,7 +3,7 @@ import { RootState } from 'redux/store'
 
 
 
-type ModalsType = 'add-post'
+type ModalsType = 'add-post' | 'add-category'
 
 type AlertType = {
   type: 'success' | 'error',
@@ -19,7 +19,7 @@ type CommonState = {
 const initialState: CommonState = {
   alert: null,
   imageViewingUrl: null,
-  currentVisibleModal: null
+  currentVisibleModal: 'add-category'
 }
 
 const commonSlice = createSlice({

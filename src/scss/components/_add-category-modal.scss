@@ -1,0 +1,30 @@
+.add-category-modal {
+  & {
+
+  }
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+  &__name-input {
+    height: 35px;
+    text-indent: 10px;
+    border-radius: 3px;
+    border: 1px solid rgb(229, 231, 235);
+
+    &--error {
+      border-color: rgb(220, 38, 38);
+    }
+    &:focus {
+      border-color: rgb(59 130 246);
+    }
+  }
+  &__submit-btn {
+    margin-top: 40px;
+    background-color: rgb(59 130 246);
+    color: rgb(255, 255, 255);
+    font-size: 17px;
+    padding: 5px;
+    border-radius: 4px;
+  }
+}

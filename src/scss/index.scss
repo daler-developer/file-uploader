@@ -3,6 +3,7 @@
 @import './base/reset';
 @import './base/animations';
 
+@import './components/loader';
 @import './components/auth-form';
 @import './components/auth-page';
 @import './components/loading-button';
@@ -16,4 +17,6 @@
 @import './components/add-post-modal';
 @import './components/modal';
 @import './components/popup-menu';
+@import './components/add-category-modal';
+// @import './components/';
 // @import './components/';

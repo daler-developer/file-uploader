@@ -14,7 +14,8 @@ export default ({ className, children, isHidden, title, onClose }: Props) => {
   const modalRef = useRef<any>(null!)
 
   useOnClickOutside(modalRef, () => {
-    onClose()
+    // console.log('click outside')
+    // onClose()
   })
 
   const handleCloseBtnClick = () => {

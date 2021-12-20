@@ -186,32 +186,31 @@ export default  ({}: Props) => {
 
       </div>
 
-      <div className="profile-page__seperator"></div>
+      {/* <div className="profile-page__seperator"></div> */}
 
-      {isLoading ? (
-        <h3 className="profile-page__loading-title">Loading...</h3>
-      ) : (
-        <div className="profile-page__posts">
-          {getFilteredPosts().map((post) => (
-            <Post
-              key={post.id}
-              data={post}
-              classes={{ root: 'profile-page__post' }}
-            />
-          ))}
-        </div>
-      )}
+      <div className="profile-page__posts">
+        {getFilteredPosts().map((post) => (
+          <Post
+            key={post.id}
+            data={post}
+            classes={{ root: 'profile-page__post' }}
+          />
+        ))}
+      </div>
+      {/* )} */}
 
       {!isLoading && getFilteredPosts().length === 0 && (
         <h3 className="profile-page__no-posts-title">No posts</h3>
       )}
 
-      {!isLoading && (
+      {!isLoading ? (
         <button type="button" className="profile-page__reload-btn" onClick={handleReloadBtnClick}>
           <span className="profile-page__icon profile-page__reload-icon material-icons-outlined">
             autorenew
           </span>
         </button>
+      ) : (
+        <div className="profile-page__loader" />
       )}
       
     </Layout>

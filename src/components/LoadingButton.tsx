@@ -10,14 +10,16 @@ type Props = {
   classes?: {
     root?: string,
     spinner?: string
-  }
+  },
+  className?: string,
+  type?: 'button' | 'reset' | 'submit'
 }
 
-export default  ({ isLoading, restProps, classes, children }: Props) => {
+export default  ({ isLoading, className, restProps, classes, children, type }: Props) => {
 
 
   return (
-    <button type="button" className={classNames('loading-button', classes?.root)} {...restProps?.root}>
+    <button {...restProps?.root} type={type || 'button'} className={classNames('loading-button', classes?.root, className)}>
       {children}
       {isLoading && (
         <div

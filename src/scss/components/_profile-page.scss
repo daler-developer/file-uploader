@@ -101,16 +101,23 @@
   &__add-post-btn {
     background-color: rgb(89, 145, 11);
   }
-  &__reload-btn {
-    @include flex-center;
+  &__reload-btn, &__loader {
     @include push--auto;
-    margin-top: 20px;
-    border-radius: 50%;
-    border: 1px solid #000;
     width: 50px;
     height: 50px;
+    margin-top: 20px;
+    border-radius: 50%;
+  }
+  &__reload-btn {
+    @include flex-center;
+    border: 1px solid #000;
   }
   &__reload-icon {
     font-size: 22px;
+  }
+  &__loader {
+    border: 5px solid rgb(24, 76, 198);
+    border-right-color: transparent;
+    animation: spinner-rotate 1s infinite;
   }
 }

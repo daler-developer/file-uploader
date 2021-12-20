@@ -1,9 +1,8 @@
 import classNames from "classnames"
 import { db, storage } from "firebase"
-import { FirestorePost } from "firebase/documentTypes"
 import { deleteDoc, doc, updateDoc } from "firebase/firestore"
 import { deleteObject, ref } from "firebase/storage"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { selectCurrentUser } from "redux/reducers/authReducer"
 import { commonActions } from "redux/reducers/commonReducer"
 import { postsActions, ReduxPost } from "redux/reducers/postsReducer"
@@ -21,6 +20,9 @@ type Props = {
 export default  ({ data, classes }: Props) => {
   const [isPopupHidden, setIsPopupHidden] = useState<boolean>(true)
   const [isImgLoading, setIsImgLoading] = useState<boolean>(true)
+  const [isDeletingLoading, setIsDeletingLoading] = useState<boolean>(false)
+
+  const downloadLinkRef = useRef<HTMLAnchorElement>(null!)
 
   const dispatch = useAppDispatch()
 
@@ -42,6 +44,8 @@ export default  ({ data, classes }: Props) => {
 
   const handleDeletePostBtnClick = async () => {
     try {
+      setIsDeletingLoading(true)
+
       // update firebase state
       await deleteDoc(doc(db, 'posts', data.id))
       await deleteObject(ref(storage, data.image.path))
@@ -53,7 +57,7 @@ export default  ({ data, classes }: Props) => {
     } catch {
       dispatch(commonActions.openAlert({ type: 'error', text: 'Cannot delete' }))
     } finally {
-
+      setIsDeletingLoading(false)
     }
   }
 
@@ -88,30 +92,29 @@ export default  ({ data, classes }: Props) => {
     setIsImgLoading(false)
   }
 
+  const handleDownloadImageBtnClick = async () => {
+    const response = await fetch(data.image.url)
+    const blob = await response.blob()
+
+    
+    downloadLinkRef.current.click()
+  }
+
   return (
     <div className={classNames('post', classes?.root)} title={data.desc}>
 
-      <div className="post__left">
+      <div className="post__body">
 
         <div className="post__img-wrapper">
+          <div className={classNames('post__img-loader', { 'post__img-loader--hidden': !isImgLoading })}>
+            <div className="post__img-loader-spinner" />
+          </div>
           <img
             src={data.image.url}
             alt="Image"
-            className="post__img"
+            className={classNames('post__img', { 'post__img--hidden': isImgLoading })}
             onLoad={handleImgLoad}
           />
-          {/* {isImgLoading ? (
-            <div className="post__img-loader">
-
-            </div>
-          ) : (
-            <img
-              src={data.image.url}
-              alt="Image"
-              className="post__img"
-              onLoad={handleImgLoad}
-            />
-          )} */}
           <button type="button" className="post__view-img-btn" onClick={handleViewBtnClick}>
             <span className="post__icon post__see-icon material-icons-outlined">
               visibility
@@ -124,7 +127,7 @@ export default  ({ data, classes }: Props) => {
             {data.desc}
           </p>
           <div className="post__meta-data">
-            {'2.3 MB'}
+            {formatBytes(data.image.size)}
             <span className="post__dot" />
             {getGeneratedCreatedDate()}
           </div>
@@ -132,22 +135,31 @@ export default  ({ data, classes }: Props) => {
 
       </div>
 
-      <div className="post__right">
-        <button type="button" className="post__download-btn post__download-img-btn">
+      <div className="post__actions">
+        <button type="button" className="post__actions-btn post__download-btn post__download-img-btn" onClick={handleDownloadImageBtnClick}>
           <span className="post__icon material-icons-outlined">
             download
           </span>
         </button>
         {data.isFavourite ? (
-          <button className="post__icon post__heart-icon post__heart-filled-icon material-icons-outlined" onClick={handleRemoveFromFavoruteBtnClick}>
-            favorite
+          <button className="post__actions-btn post__actions-remove-favourite-btn" onClick={handleRemoveFromFavoruteBtnClick}>
+            <span className="post__icon post__heart-icon post__heart-filled-icon material-icons-outlined">
+              favorite
+            </span>
           </button>
         ) : (
-          <button className="post__icon post__heart-icon post__heart-unfilled-icon material-icons-outlined" onClick={handleMoveToFavoruteBtnClick}>
-            favorite_border
+          <button className="post__actions-btn" onClick={handleMoveToFavoruteBtnClick}>
+            <span className="post__icon post__heart-icon post__heart-unfilled-icon material-icons-outlined">
+              favorite_border
+            </span>
           </button>
         )}
-        <button className="post__open-menu-btn" onClick={handleOpenMenuBtnClick}>
+        <button className="post__actions-btn post__actions-delete-btn" onClick={handleDeletePostBtnClick}>
+          <span className="post__icon material-icons-outlined">
+            delete
+          </span>
+        </button>
+        <button className="post__actions-btn post__actions-open-menu-btn" onClick={handleOpenMenuBtnClick}>
           <span className="post__icon post__more-icon material-icons-outlined">
             more_vert
           </span>
@@ -185,6 +197,8 @@ export default  ({ data, classes }: Props) => {
           )}
         </ul>
       </PopupMenu>
+
+      <a ref={downloadLinkRef} download hidden>download</a>
     </div>
   )
 }

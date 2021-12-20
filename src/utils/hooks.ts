@@ -15,24 +15,21 @@ export const useQuery = () => {
 }
 
 export const useOnClickOutside = (ref: RefObject<HTMLElement>, handler: Function) => {
-  useEffect(
-    () => {
-
-      const listener = (e: any) => {
-        if (!ref.current || ref.current.contains(e.target)) {
-          return
-        }
-
-        handler(e)
+  useEffect(() => {
+    const listener = (e: any) => {
+      if (!ref.current || ref.current.contains(e.target)) {
+        return
       }
 
-      document.addEventListener('mousedown', listener)
-      document.addEventListener('touchstart', listener)
+      handler(e)
+    }
 
-      return () => {
-        document.removeEventListener('mousedown', listener)
-        document.removeEventListener('touchstart', listener)
-      };
-    }, [ref, handler]
-  );
+    document.addEventListener('mousedown', listener)
+    document.addEventListener('touchstart', listener)
+
+    return () => {
+      document.removeEventListener('mousedown', listener)
+      document.removeEventListener('touchstart', listener)
+    };
+  }, [ref, handler])
 }
