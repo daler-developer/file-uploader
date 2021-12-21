@@ -19,7 +19,7 @@ type CommonState = {
 const initialState: CommonState = {
   alert: null,
   imageViewingUrl: null,
-  currentVisibleModal: 'add-category'
+  currentVisibleModal: null
 }
 
 const commonSlice = createSlice({

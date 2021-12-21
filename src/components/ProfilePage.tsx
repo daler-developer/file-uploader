@@ -3,13 +3,14 @@ import Layout from './Layout'
 import Post from './Post'
 import { db } from 'firebase'
 import { FirestorePost } from 'firebase/documentTypes'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { postsActions, ReduxPost, selectPosts } from 'redux/reducers/postsReducer'
-import { useAppDispatch, useAppSelector, useQuery } from 'utils/hooks'
+import { useAppDispatch, useAppSelector, useOnClickOutside, useQuery } from 'utils/hooks'
 import { commonActions } from 'redux/reducers/commonReducer'
 import PopupMenu from './PopupMenu'
 import { useHistory, useLocation } from 'react-router-dom'
 import { selectCurrentUser } from 'redux/reducers/authReducer'
+import { motion } from 'framer-motion'
 
 
 
@@ -36,6 +37,7 @@ export default  ({}: Props) => {
 
   useEffect(() => {
     loadPosts()
+    loadCategories()
   }, [])
 
   const loadPosts = async () => {
@@ -60,6 +62,10 @@ export default  ({}: Props) => {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const loadCategories = async () => {
+    
   }
 
   const filterLabels = {
@@ -99,9 +105,7 @@ export default  ({}: Props) => {
   }
 
   const handleFilterBtnClick = () => {
-    if (isFilterMenuHidden) {
-      setIsFilterMenuHidden(false)
-    }
+    setIsFilterMenuHidden(!isFilterMenuHidden)
   }
 
   const handleReloadBtnClick = () => {
@@ -135,24 +139,23 @@ export default  ({}: Props) => {
       
       <div className="profile-page__top-bar">
 
-        <div className="profile-page__search-input-wrapper">
+        <form className="profile-page__search-input-wrapper" action="#">
           <span className="profile-page__icon profile-page__search-icon material-icons-outlined">
             search
           </span>
           <input
             type="text"
             className="profile-page__search-input"
-            placeholder="Search image by desc..."
+            placeholder="Search..."
+            size={1}
             value={searchInputValue}
             onChange={(e) => setSearchInputValue(e.target.value)}
           />
-        </div>
+        </form>
 
         <div className="profile-page__filter-btn-wrapper">
           <button type="button" className="profile-page__filter-btn" onClick={handleFilterBtnClick}>
-            <span className="profile-page__icon material-icons-outlined">
-              auto_awesome_mosaic
-            </span>
+            <span className="profile-page__icon material-icons-outlined">sort</span>
             {filterLabels[getSelectedFilter() || 'all']}
           </button>
 
@@ -186,7 +189,6 @@ export default  ({}: Props) => {
 
       </div>
 
-      {/* <div className="profile-page__seperator"></div> */}
 
       <div className="profile-page__posts">
         {getFilteredPosts().map((post) => (
@@ -197,18 +199,17 @@ export default  ({}: Props) => {
           />
         ))}
       </div>
-      {/* )} */}
 
       {!isLoading && getFilteredPosts().length === 0 && (
         <h3 className="profile-page__no-posts-title">No posts</h3>
       )}
 
       {!isLoading ? (
-        <button type="button" className="profile-page__reload-btn" onClick={handleReloadBtnClick}>
+        <motion.button type="button" className="profile-page__reload-btn" onClick={handleReloadBtnClick} whileTap={{ scale: .9 }}>
           <span className="profile-page__icon profile-page__reload-icon material-icons-outlined">
-            autorenew
+            refresh
           </span>
-        </button>
+        </motion.button>
       ) : (
         <div className="profile-page__loader" />
       )}

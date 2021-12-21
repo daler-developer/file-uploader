@@ -13,7 +13,10 @@ type Props = {
 export default ({ children, isHidden, className, onClose }: Props) => {
   const rootRef = useRef<HTMLDivElement>(null!)
 
-  useOnClickOutside(rootRef, () => onClose())
+  useOnClickOutside(rootRef, () => {
+    onClose()
+    console.log('outside')
+  }, [!isHidden])
 
   return (
     <div className={classNames('popup-menu', { 'popup-menu--hidden': isHidden }, className)} ref={rootRef}>

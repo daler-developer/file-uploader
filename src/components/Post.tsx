@@ -9,6 +9,7 @@ import { postsActions, ReduxPost } from "redux/reducers/postsReducer"
 import { formatBytes } from "utils/helpers"
 import { useAppDispatch, useAppSelector } from "utils/hooks"
 import PopupMenu from "./PopupMenu"
+import { motion } from 'framer-motion'
 
 type Props = {
   data: ReduxPost,
@@ -136,34 +137,34 @@ export default  ({ data, classes }: Props) => {
       </div>
 
       <div className="post__actions">
-        <button type="button" className="post__actions-btn post__download-btn post__download-img-btn" onClick={handleDownloadImageBtnClick}>
+        <motion.button type="button" className="post__actions-btn post__download-btn post__download-img-btn" onClick={handleDownloadImageBtnClick} whileTap={{ scale: .9 }}>
           <span className="post__icon material-icons-outlined">
             download
           </span>
-        </button>
+        </motion.button>
         {data.isFavourite ? (
-          <button className="post__actions-btn post__actions-remove-favourite-btn" onClick={handleRemoveFromFavoruteBtnClick}>
+          <motion.button className="post__actions-btn post__actions-remove-favourite-btn" onClick={handleRemoveFromFavoruteBtnClick} whileTap={{ scale: .9 }}>
             <span className="post__icon post__heart-icon post__heart-filled-icon material-icons-outlined">
               favorite
             </span>
-          </button>
+          </motion.button>
         ) : (
-          <button className="post__actions-btn" onClick={handleMoveToFavoruteBtnClick}>
+          <motion.button className="post__actions-btn" onClick={handleMoveToFavoruteBtnClick} whileTap={{ scale: .9 }}>
             <span className="post__icon post__heart-icon post__heart-unfilled-icon material-icons-outlined">
               favorite_border
             </span>
-          </button>
+          </motion.button>
         )}
-        <button className="post__actions-btn post__actions-delete-btn" onClick={handleDeletePostBtnClick}>
+        <motion.button className="post__actions-btn post__actions-delete-btn" onClick={handleDeletePostBtnClick} whileTap={{ scale: .9 }}>
           <span className="post__icon material-icons-outlined">
             delete
           </span>
-        </button>
-        <button className="post__actions-btn post__actions-open-menu-btn" onClick={handleOpenMenuBtnClick}>
+        </motion.button>
+        <motion.button className={classNames('post__actions-btn post__actions-open-menu-btn', 'post__actions-open-menu-btn--hidden')} onClick={handleOpenMenuBtnClick} whileTap={{ scale: .9 }}>
           <span className="post__icon post__more-icon material-icons-outlined">
             more_vert
           </span>
-        </button>
+        </motion.button>
       </div>
 
       <PopupMenu isHidden={isPopupHidden} onClose={() => setIsPopupHidden(true)} className="post__popup-menu">

@@ -1,6 +1,7 @@
 import { auth } from 'firebase'
 import { signOut } from 'firebase/auth'
 import Container from './Container'
+import logo from 'assets/logo.jpg'
 
 
 type Props = {
@@ -17,16 +18,11 @@ export default ({ }: Props) => {
     <header className="header">
       <Container>
         <div className="header__body">
-          <div className="header__left">
-            <span className="header__logo material-icons-outlined">
-              add_a_photo
-            </span>
-          </div>
-          <div className="header__right">
-            <button className="header__logout-btn" onClick={handleLogoutBtnClick}>
-              Logout
-            </button>
-          </div>
+          <img className="header__logo" src={logo} />
+          <button className="header__logout-btn" onClick={handleLogoutBtnClick}>
+            <span className="header__logout-icon material-icons-outlined">logout</span>
+            <span>Log out</span>
+          </button>
         </div>
       </Container>
     </header>

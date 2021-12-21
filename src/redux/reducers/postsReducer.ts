@@ -33,9 +33,10 @@ const postsSlice = createSlice({
       state.push(...payload)
     },
     deletePost(state, { payload }: PayloadAction<string>) {
-      state.splice(0, state.length)
-      const filtered = state.filter((post) => post.id !== payload)
-      state.push(...filtered)
+      const postIndex = state.findIndex((post) => post.id === payload)
+      state.splice(postIndex, 1)
+      // const filtered = state.filter((post) => post.id !== payload)
+      // state.push(...filtered)
     },
     addPost(state, { payload }: PayloadAction<ReduxPost>) {
       state.push(payload)

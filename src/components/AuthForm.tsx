@@ -141,7 +141,7 @@ export default  ({}: Props) => {
           {...form.getFieldProps('password')}
         />
       </div>
-      <LoadingButton isLoading={isLoading} classes={{ root: 'auth-form__submit-btn' }} restProps={{ root: { type: 'submit' } }}>
+      <LoadingButton isLoading={isLoading} classes={{ root: 'auth-form__submit-btn' }} type="submit">
         {getSelectedTab() === 'login' && 'Login'}
         {getSelectedTab() === 'register' && 'Register'}
       </LoadingButton>

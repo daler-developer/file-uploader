@@ -20,13 +20,12 @@ export default  ({ isLoading, className, restProps, classes, children, type }: P
 
   return (
     <button {...restProps?.root} type={type || 'button'} className={classNames('loading-button', classes?.root, className)}>
-      {children}
-      {isLoading && (
+      {isLoading ? (
         <div
           className={classNames('loading-button__spinner', classes?.spinner)}
           {...restProps?.spinner}
         />
-      )}
+      ) : children}
     </button>
   )
 }

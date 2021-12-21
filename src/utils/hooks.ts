@@ -14,22 +14,24 @@ export const useQuery = () => {
   return useMemo(() => new URLSearchParams(search), [search])
 }
 
-export const useOnClickOutside = (ref: RefObject<HTMLElement>, handler: Function) => {
+export const useOnClickOutside = (ref: RefObject<HTMLElement>, handler: Function, conditions?: boolean[]) => {
   useEffect(() => {
     const listener = (e: any) => {
       if (!ref.current || ref.current.contains(e.target)) {
         return
       }
 
+      if (conditions && !conditions.every((el) => Boolean(el) === true)) {
+        return 
+      }
+
       handler(e)
     }
 
-    document.addEventListener('mousedown', listener)
-    document.addEventListener('touchstart', listener)
+    document.addEventListener('click', listener)
 
     return () => {
-      document.removeEventListener('mousedown', listener)
-      document.removeEventListener('touchstart', listener)
+      document.removeEventListener('click', listener)
     };
   }, [ref, handler])
 }

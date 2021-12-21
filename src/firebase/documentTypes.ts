@@ -11,3 +11,7 @@ export type FirestorePost = {
   desc: string,
   isFavourite: boolean,
 }
+
+export type FirestoreCategory = {
+  name: string
+}

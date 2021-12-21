@@ -5,9 +5,10 @@
   &__icon {
     display: block;
   }
-  &__top-bar {
-    padding-bottom: 5px;
+  &__top-bar, &__posts, &__no-posts-title, &__loading-title {
     margin-top: 20px;
+  }
+  &__top-bar {
     display: flex;
     column-gap: 5px;
     height: 40px;
@@ -35,6 +36,28 @@
       background-color: rgba(0, 0, 0, 0.115);
     }
   }
+  &__filter-btn {
+    height: 100%;
+    background-color: rgb(26, 115, 232);
+  }
+  &__filter-btn, &__add-post-btn {
+    @include flex-center;
+    gap: 3px;
+    padding: 3px 13px;
+    color: white;
+    font-weight: 500;
+    font-size: 17px;
+    transform: all .2s ease-in;
+    position: relative;
+    border-radius: 3px;
+
+    &:hover {
+      opacity: .9;
+    }
+  }
+  &__add-post-btn {
+    background-color: rgb(89, 145, 11);
+  }
   &__search-input-wrapper {
     padding: 0 5px;
     border-radius: 3px;
@@ -43,32 +66,35 @@
     align-items: center;
     column-gap: 4px;
     font-size: 17px;
-    border: 1px solid rgba(0, 0, 0, 0.578);
+    color: rgb(161 161 170);
+    border: 1px solid rgb(161 161 170);
+
+    &:hover {
+      border-color: rgb(30 41 59) !important;
+      color: rgb(30 41 59) !important;
+    }
   }
   &__search-icon {
     font-size: 22px;
   }
   &__search-input {
+    min-width: 0;
     flex: 1 0 0;
     align-self: stretch;
-  }
-  &__seperator {
-    margin-top: 5px;
-    height: 1px;
-    background-color: black;
+    
+    &::placeholder {
+      color: rgb(161 161 170);
+    }
   }
   &__posts {
-    margin-top: 20px;
     display: flex;
     flex-direction: column;
     row-gap: 5px;
   }
   &__post {
-    border: 1px solid rgba(0, 0, 0, 0.455);
     height: 60px;
   }
   &__no-posts-title, &__loading-title {
-    margin-top: 20px;
     font-size: 22px;
     text-align: center;
     user-select: none
@@ -76,30 +102,8 @@
   &__loading-title {
 
   }
-  &__filter-btn {
-    height: 100%;
-  }
-  &__filter-btn, &__add-post-btn {
-    @include flex-center;
-    gap: 3px;
-    padding: 0 13px;
-    border-radius: 3px;
-    color: white;
-    font-weight: 500;
-    font-size: 17px;
-    transform: all .2s ease-in;
-    position: relative;
-    background-color: rgb(24, 76, 198);
-
-    &:hover {
-      opacity: .9;
-    }
-  }
   &__filter-btn-wrapper {
     position: relative;
-  }
-  &__add-post-btn {
-    background-color: rgb(89, 145, 11);
   }
   &__reload-btn, &__loader {
     @include push--auto;
@@ -110,14 +114,37 @@
   }
   &__reload-btn {
     @include flex-center;
-    border: 1px solid #000;
+    font-size: 35px;
+    color: grey;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.034);
+    }
   }
   &__reload-icon {
-    font-size: 22px;
+
   }
   &__loader {
     border: 5px solid rgb(24, 76, 198);
     border-right-color: transparent;
     animation: spinner-rotate 1s infinite;
+  }
+}
+
+@include mq('tablet') {
+  .profile-page {
+    &__post {
+      height: 50px;
+    }
+    &__top-bar, &__posts, &__no-posts-title, &__loading-title {
+      margin-top: 10px;
+    }
+    &__top-bar {
+      height: 30px;
+    }
+    &__filter-btn, &__add-post-btn {
+      padding: 3px 7px;
+      font-size: 15px;
+    }
   }
 }

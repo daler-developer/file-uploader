@@ -22,7 +22,6 @@ type FormValues = {
 }
 
 export default ({}: Props) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [image, setImage] = useState<File | null>(null)
 
   const dispatch = useAppDispatch()
@@ -51,8 +50,6 @@ export default ({}: Props) => {
     },
     async onSubmit(v) {
       try {
-        setIsLoading(true)
-
         // update firestore state
         const path = `images/${nanoid()}_${image!.name}`
         const imageRef = ref(storage, path)
@@ -96,7 +93,6 @@ export default ({}: Props) => {
       } finally {
         form.resetForm()
         resetImage()
-        setIsLoading(false)
       }
     }
   })
@@ -108,6 +104,9 @@ export default ({}: Props) => {
 
   const handleModalClose = () => {
     dispatch(commonActions.setCurrentVisibleModal(null))
+
+    form.resetForm()
+    resetImage()
   }
 
   const handleRemoveSelectedImageClick = () => {
@@ -157,7 +156,7 @@ export default ({}: Props) => {
           </button>
         )}
 
-        <LoadingButton isLoading={isLoading} classes={{ root: 'add-post-modal__submit-btn' }} restProps={{ root: { type: 'submit' } }}>
+        <LoadingButton isLoading={form.isSubmitting} classes={{ root: 'add-post-modal__submit-btn' }} type="submit">
           Submit
         </LoadingButton>
       </form>

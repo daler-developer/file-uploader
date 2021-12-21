@@ -1,4 +1,7 @@
 import classNames from "classnames"
+import { db } from "firebase"
+import { FirestoreCategory } from "firebase/documentTypes"
+import { addDoc, collection } from "firebase/firestore"
 import { FormikErrors, useFormik } from "formik"
 import { commonActions, selectCurrentVisibleModal } from "redux/reducers/commonReducer"
 import { useAppDispatch, useAppSelector } from "utils/hooks"
@@ -27,13 +30,17 @@ export default ({}: Props) => {
 
       return errors
     },
-    onSubmit(v) {
+    async onSubmit(v) {
       try {
+        const category: FirestoreCategory = {
+          name: v.name
+        }
 
+        await addDoc(collection(db, 'categories'), category)
       } catch {
-
+        dispatch(commonActions.openAlert({ type: 'error', text: 'Cannot create category' }))
       } finally {
-      
+        dispatch(commonActions.openAlert({ type: 'success', text: 'Created category' }))
       }
     }
   })
