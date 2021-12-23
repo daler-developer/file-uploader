@@ -1,6 +1,7 @@
 .profile-page {
   & {
-
+    min-height: 100vh;
+    background-color: rgb(241 245 249);
   }
   &__icon {
     display: block;
@@ -60,6 +61,7 @@
     background-color: rgb(89, 145, 11);
   }
   &__search-input-wrapper {
+    background-color: rgb(255, 255, 255);
     padding: 0 5px;
     border-radius: 3px;
     flex: 1 0 0;

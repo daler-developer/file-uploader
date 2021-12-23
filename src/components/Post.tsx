@@ -122,7 +122,7 @@ export default  ({ data, classes }: Props) => {
   }
 
   return (
-    <div className={classNames('post', classes?.root)} title={data.desc}>
+    <div className={classNames('post', classes?.root)}>
 
       <div className="post__body">
 
@@ -144,7 +144,7 @@ export default  ({ data, classes }: Props) => {
         </div>
 
         <div className="post__info">
-          <p className="post__desc">
+          <p className="post__desc" title={data.desc}>
             {data.desc}
           </p>
           <div className="post__meta-data">
@@ -157,30 +157,30 @@ export default  ({ data, classes }: Props) => {
       </div>
 
       <div className="post__actions">
-        <motion.button className="post__actions-btn" onClick={handleViewBtnClick} whileTap={{ scale: .9 }}>
+        <motion.button className="post__actions-btn" onClick={handleViewBtnClick} whileTap={{ scale: .9 }} title="View">
           <span className="post__icon material-icons-outlined">
             visibility
           </span>
         </motion.button>
         {data.isFavourite ? (
-          <motion.button disabled={isMakeFavouriteLoading} className="post__actions-btn post__actions-remove-favourite-btn" onClick={handleRemoveFromFavoruteBtnClick} whileTap={{ scale: .9 }}>
+          <motion.button disabled={isMakeFavouriteLoading} className="post__actions-btn post__actions-remove-favourite-btn" onClick={handleRemoveFromFavoruteBtnClick} whileTap={{ scale: .9 }} title="Remove from favourite">
             <span className="post__icon post__heart-icon post__heart-filled-icon material-icons-outlined">
               favorite
             </span>
           </motion.button>
         ) : (
-          <motion.button disabled={isUnmakingFavouriteLoading} className="post__actions-btn" onClick={handleMoveToFavoruteBtnClick} whileTap={{ scale: .9 }}>
+          <motion.button disabled={isUnmakingFavouriteLoading} className="post__actions-btn" onClick={handleMoveToFavoruteBtnClick} whileTap={{ scale: .9 }} title="Make favourite">
             <span className="post__icon post__heart-icon post__heart-unfilled-icon material-icons-outlined">
               favorite_border
             </span>
           </motion.button>
         )}
-        <motion.button disabled={isDeletingLoading} className="post__actions-btn post__actions-delete-btn" onClick={handleDeletePostBtnClick} whileTap={{ scale: .9 }}>
+        <motion.button disabled={isDeletingLoading} className="post__actions-btn post__actions-delete-btn" onClick={handleDeletePostBtnClick} whileTap={{ scale: .9 }} title="Delete">
           <span className="post__icon material-icons-outlined">
             delete
           </span>
         </motion.button>
-        <motion.button className={classNames('post__actions-btn post__actions-open-menu-btn', 'post__actions-open-menu-btn--hidden')} onClick={handleOpenMenuBtnClick} whileTap={{ scale: .9 }}>
+        <motion.button className={classNames('post__actions-btn post__actions-open-menu-btn', 'post__actions-open-menu-btn--hidden')} onClick={handleOpenMenuBtnClick} whileTap={{ scale: .9 }} title="Menu">
           <span className="post__icon post__more-icon material-icons-outlined">
             more_vert
           </span>
