@@ -10,6 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: z("modal");
   }
   &--hidden {
     opacity: 0;

@@ -9,14 +9,16 @@
     transition: transform 0.2s linear;
   }
   &--success {
-    border: 1px solid #059669;
-    background-color: #D1FAE5;
-    color: #059669;
+    // border: 1px solid rgb(35, 90, 37);
+    background-color: rgb(237, 247, 237);
+    color: rgb(35, 111, 38);
+    font-weight: 500;
+    font-size: 15px;
   }
   &--error {
-    border: 1px solid #B91C1C;
-    background-color: #FEE2E2;
-    color: #B91C1C;
+    // border: 1px solid rgb(153 27 27);
+    background-color: #f5e8e8;
+    color: rgb(153 27 27);
   }
   &--hidden {
     transform: translate(-50%, 0) scale(0);

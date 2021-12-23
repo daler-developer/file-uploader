@@ -15,7 +15,6 @@ export default ({ children, isHidden, className, onClose }: Props) => {
 
   useOnClickOutside(rootRef, () => {
     onClose()
-    console.log('outside')
   }, [!isHidden])
 
   return (

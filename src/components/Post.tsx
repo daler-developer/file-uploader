@@ -22,6 +22,8 @@ export default  ({ data, classes }: Props) => {
   const [isPopupHidden, setIsPopupHidden] = useState<boolean>(true)
   const [isImgLoading, setIsImgLoading] = useState<boolean>(true)
   const [isDeletingLoading, setIsDeletingLoading] = useState<boolean>(false)
+  const [isMakeFavouriteLoading, setIsMakeFavouriteLoading] = useState<boolean>(false)
+  const [isUnmakingFavouriteLoading, setIsUnmakingFavouriteLoading] = useState<boolean>(false)
 
   const downloadLinkRef = useRef<HTMLAnchorElement>(null!)
 
@@ -40,11 +42,14 @@ export default  ({ data, classes }: Props) => {
   }
 
   const handleViewBtnClick = () => {
+    setIsPopupHidden(true)
+
     dispatch(commonActions.setImageViewingUrl(data.image.url))
   }
 
   const handleDeletePostBtnClick = async () => {
     try {
+      setIsPopupHidden(true)
       setIsDeletingLoading(true)
 
       // update firebase state
@@ -64,6 +69,9 @@ export default  ({ data, classes }: Props) => {
 
   const handleMoveToFavoruteBtnClick = async () => {
     try {
+      setIsPopupHidden(true)
+      setIsMakeFavouriteLoading(true)
+
       // update firestore
       await updateDoc(doc(db, 'posts', data.id), {
         isFavourite: true
@@ -72,21 +80,33 @@ export default  ({ data, classes }: Props) => {
       // update redux state
       dispatch(postsActions.makePostFavourite(data.id))
 
+      dispatch(commonActions.openAlert({ type: 'success', text: 'Made image favourite' }))
     } catch {
-
+      dispatch(commonActions.openAlert({ type: 'error', text: 'Cannot make image favourite' }))
     } finally {
-
+      setIsMakeFavouriteLoading(false)
     }
   }
 
   const handleRemoveFromFavoruteBtnClick = async () => {
-    // update firestore
-    await updateDoc(doc(db, 'posts', data.id), {
-      isFavourite: false
-    })
+    try {
+      setIsUnmakingFavouriteLoading(true)
+      setIsPopupHidden(true)
 
-    // update redux state
-    dispatch(postsActions.removePostFavourite(data.id))
+      // update firestore
+      await updateDoc(doc(db, 'posts', data.id), {
+        isFavourite: false
+      })
+
+      // update redux state
+      dispatch(postsActions.removePostFavourite(data.id))
+
+      dispatch(commonActions.openAlert({ type: 'success', text: 'Removed image from favourite' }))
+    } catch {
+      dispatch(commonActions.openAlert({ type: 'error', text: 'Cannot remove image from favourite' }))
+    } finally {
+      setIsUnmakingFavouriteLoading(false)
+    }
   }
 
   const handleImgLoad = () => {
@@ -97,7 +117,7 @@ export default  ({ data, classes }: Props) => {
     const response = await fetch(data.image.url)
     const blob = await response.blob()
 
-    
+    downloadLinkRef.current.href = URL.createObjectURL(blob)
     downloadLinkRef.current.click()
   }
 
@@ -137,25 +157,25 @@ export default  ({ data, classes }: Props) => {
       </div>
 
       <div className="post__actions">
-        <motion.button type="button" className="post__actions-btn post__download-btn post__download-img-btn" onClick={handleDownloadImageBtnClick} whileTap={{ scale: .9 }}>
+        <motion.button className="post__actions-btn" onClick={handleViewBtnClick} whileTap={{ scale: .9 }}>
           <span className="post__icon material-icons-outlined">
-            download
+            visibility
           </span>
         </motion.button>
         {data.isFavourite ? (
-          <motion.button className="post__actions-btn post__actions-remove-favourite-btn" onClick={handleRemoveFromFavoruteBtnClick} whileTap={{ scale: .9 }}>
+          <motion.button disabled={isMakeFavouriteLoading} className="post__actions-btn post__actions-remove-favourite-btn" onClick={handleRemoveFromFavoruteBtnClick} whileTap={{ scale: .9 }}>
             <span className="post__icon post__heart-icon post__heart-filled-icon material-icons-outlined">
               favorite
             </span>
           </motion.button>
         ) : (
-          <motion.button className="post__actions-btn" onClick={handleMoveToFavoruteBtnClick} whileTap={{ scale: .9 }}>
+          <motion.button disabled={isUnmakingFavouriteLoading} className="post__actions-btn" onClick={handleMoveToFavoruteBtnClick} whileTap={{ scale: .9 }}>
             <span className="post__icon post__heart-icon post__heart-unfilled-icon material-icons-outlined">
               favorite_border
             </span>
           </motion.button>
         )}
-        <motion.button className="post__actions-btn post__actions-delete-btn" onClick={handleDeletePostBtnClick} whileTap={{ scale: .9 }}>
+        <motion.button disabled={isDeletingLoading} className="post__actions-btn post__actions-delete-btn" onClick={handleDeletePostBtnClick} whileTap={{ scale: .9 }}>
           <span className="post__icon material-icons-outlined">
             delete
           </span>
@@ -169,6 +189,14 @@ export default  ({ data, classes }: Props) => {
 
       <PopupMenu isHidden={isPopupHidden} onClose={() => setIsPopupHidden(true)} className="post__popup-menu">
         <ul className="post__popup-menu-btns">
+          <li className="post__popup-menu-btns-item">
+            <button className="post__popup-menu-btn" onClick={handleViewBtnClick}>
+              <span className="post__icon post__popup-menu-icon material-icons-outlined">
+                visibility
+              </span>
+              View
+            </button>
+          </li>
           <li className="post__popup-menu-btns-item">
             <button className="post__popup-menu-btn" onClick={handleDeletePostBtnClick}>
               <span className="post__icon post__popup-menu-icon material-icons-outlined">

@@ -7,8 +7,6 @@ type Props = {
 
 export default  ({}: Props) => {
 
-  
-
   return (
     <Layout>
       Users Page

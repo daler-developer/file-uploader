@@ -6,11 +6,7 @@
     border-radius: 3px;
     position: relative;
     background-color: rgb(255, 255, 255);
-    border: 1px solid rgba(0, 0, 0, 0.353);
-
-    &:hover {
-      border-color: rgb(0, 0, 0);
-    }
+    border: 1px solid rgb(128, 128, 128);
   }
   &__icon {
     display: block;
@@ -68,6 +64,7 @@
   }
   &__body {
     flex: 1 0 0;
+    overflow: hidden;
     display: flex;
     column-gap: 5px;
   }
@@ -81,18 +78,26 @@
     align-items: center;
     column-gap: 5px;
     font-size: 12px;
-    color: grey;
+    color: rgba(0,0,0,.54);
+    font-weight: 500;
   }
   &__dot {
     border-radius: 50%;
     width: 3px;
     height: 3px;
-    background-color: grey;
+    background-color: rgba(0,0,0,.54);
   }
   &__desc {
+    white-space: nowrap;
+    text-overflow: ellipsis;
     font-size: 14px;
-    color: grey;
-    font-weight: 400;
+    color: rgba(0,0,0,.54);
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
   &__actions {
     padding-right: 5px;
@@ -105,10 +110,10 @@
     width: 40px;
     height: 40px;
     font-size: 22px;
-    color: grey;
+    color: rgb(128, 128, 128);
 
     &:hover {
-      background-color: rgba(128, 128, 128, 0.129);
+      background-color: rgba(229, 231, 235, 0.476);
       color: rgb(0, 0, 0);
     }
   }
@@ -123,7 +128,6 @@
     display: none;
   }
   &__popup-menu {
-    min-width: 200px;
     top: 5px;
     right: 5px;
   }
@@ -134,11 +138,13 @@
     width: 100%;
     text-align: start;
     height: 30px;
-    padding: 0 12px;
-    font-size: 15.5px;
+    padding: 0 10px;
+    font-size: 14.5px;
+    color: rgb(107 114 128);
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.115);
+      color: rgb(0, 0, 0);
     }
   }
   &__popup-menu-icon {
@@ -149,13 +155,26 @@
 @include mq('tablet-small') {
   .post {
     & {
-
+      padding: 3px;
     }
     &__actions-btn:not(.post__actions-open-menu-btn) {
       display: none;
     }
     &__actions-open-menu-btn {
       display: block;
+    }
+    &__body {
+      
+    }
+    &__desc {
+      font-size: 12px;
+    }
+    &__meta-data {
+      font-size: 10px;
+    }
+    &__actions-btn {
+      width: 34px;
+      height: 34px;
     }
   }
 }

@@ -44,10 +44,10 @@
     text-indent: 10px;
 
     &--error {
-      border-color: #DC2626;
+      border-color: rgb(153 27 27);
     }
     &:focus {
-      border-color: #7C3AED;
+      border-color: rgb(64, 149, 224);
     }
   }
   &__submit-btn {
@@ -70,7 +70,7 @@
     text-align: center;
     margin-top: 10px;
     font-size: 13px;
-    color:rgb(64, 149, 224);
+    color: rgb(64, 149, 224);
 
     &:hover {
       text-decoration: underline;

@@ -16,10 +16,8 @@ type Props = {
 }
 
 export default  ({ isLoading, className, restProps, classes, children, type }: Props) => {
-
-
   return (
-    <button {...restProps?.root} type={type || 'button'} className={classNames('loading-button', classes?.root, className)}>
+    <button {...restProps?.root} type={type || 'button'} className={classNames('loading-button', classes?.root, className)} disabled={isLoading}>
       {isLoading ? (
         <div
           className={classNames('loading-button__spinner', classes?.spinner)}

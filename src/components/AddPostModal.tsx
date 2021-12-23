@@ -86,10 +86,9 @@ export default ({}: Props) => {
           isFavourite: false
         }))
 
-        dispatch(commonActions.openAlert({ type: 'success', text: 'Success' }))
+        dispatch(commonActions.openAlert({ type: 'success', text: 'Image created' }))
       } catch (e) {
-        console.log(e)
-        dispatch(commonActions.openAlert({ type: 'error', text: 'Error' }))
+        dispatch(commonActions.openAlert({ type: 'error', text: 'Cannot create image' }))
       } finally {
         form.resetForm()
         resetImage()
@@ -160,9 +159,9 @@ export default ({}: Props) => {
           Submit
         </LoadingButton>
       </form>
-    </Modal>
 
-    <input type="file" ref={fileInputRef} onChange={handleFileInputChange} hidden />
+      <input type="file" accept="image/*" ref={fileInputRef} onChange={handleFileInputChange} hidden />
+    </Modal>
   </>
 }
 

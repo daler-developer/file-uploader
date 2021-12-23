@@ -9,6 +9,7 @@ import { useHistory, useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { commonActions } from 'redux/reducers/commonReducer'
+import { FirebaseError } from 'firebase/app'
 
 
 type Props = {
@@ -66,21 +67,20 @@ export default  ({}: Props) => {
         setIsLoading(true)
 
         if (getSelectedTab() === 'register') {
-
           await createUserWithEmailAndPassword(auth, v.email, v.password)
 
           dispatch(commonActions.openAlert({ type: 'success', text: 'Signed up' }))
-
         } else if (getSelectedTab() === 'login') {
-
           await signInWithEmailAndPassword(auth, v.email, v.password)
-          dispatch(commonActions.openAlert({ type: 'success', text: 'Signed in' }))
-          
-        }
 
+          dispatch(commonActions.openAlert({ type: 'success', text: 'Signed in' }))
+        }
       } catch (e) {
-        console.log(e)
-        dispatch(commonActions.openAlert({ type: 'error', text: 'Error' }))
+        if (getSelectedTab() === 'login') {
+          dispatch(commonActions.openAlert({ type: 'error', text: 'Cannot login' }))
+        } else {
+          dispatch(commonActions.openAlert({ type: 'error', text: 'Cannot register' }))
+        }
       } finally {
         setIsLoading(false)
         form.resetForm()
