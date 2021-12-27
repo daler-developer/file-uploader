@@ -28,10 +28,10 @@ npm run test
 
 ## Tech Stack
 
--React
--TypeScript
--Firebase
--Sass
+- React
+- TypeScript
+- Firebase
+- Sass
 
 ## Author
 
