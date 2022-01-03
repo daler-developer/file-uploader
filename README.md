@@ -1,46 +1,33 @@
-# Welcome to Image Gallery 👋
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)
-[![Twitter: DalerSaidov2003](https://img.shields.io/twitter/follow/DalerSaidov2003.svg?style=social)](https://twitter.com/DalerSaidov2003)
+# Image Gallery(MERN)
 
-> A web app, that let's you upload image files, as well as deleting, liking them
+Welcome to image gallery, where you can upload images and manipulate them 👋
+ 
+![This is an image](/preview.jpg)
 
-### 🏠 [Homepage](https://daler-developer.github.io/image-gallery)
+# ✨ [Live](https://daler-developer.github.io/image-gallery/)
 
-### ✨ [Demo](/preview.jpg)
+## Stack
+ - Front-end: [React](https://reactjs.org/) / [Redux](https://redux.js.org/) / [TypeScript](https://www.typescriptlang.org/) / [Sass](https://sass-lang.com/)
+ - Back-end: [Express](https://expressjs.com/ru/) / [Node.js](https://nodejs.org/en/)
+ - Database: [MongoDB](https://www.mongodb.com/)
+ - Deployment: [GitHub Pages](https://pages.github.com/)
 
-## Install
 
-```sh
-npm install
-```
+## Getting Started
 
-## Usage
+### Prerequisites
 
-```sh
-npm start
-```
+Please install the following software before starting development:
+  - [Git](https://git-scm.com/downloads)
+  - [Node.js](https://nodejs.org/en/download/)
 
-## Run tests
-
-```sh
-npm run test
-```
-
-## Tech Stack
-
-- React
-- TypeScript
-- Firebase
-- Sass
-
-## Author
-
-👤 **Saidov Daler**
-
-* Twitter: [@DalerSaidov2003](https://twitter.com/DalerSaidov2003)
-* Github: [@daler-developer](https://github.com/daler-developer)
-
+### Steps
+  - Clone [repository](https://github.com/daler-developer/todo-list-mern)
+  - Run `npm install` in root folder to install dependencies
+  - Run `npm start` in root folder
+  - Open `https://localhost:3000` in a browser
+  
+   
 ## Show your support
 
 Give a ⭐️ if this project helped you!
-
