@@ -8,8 +8,7 @@ Welcome to image gallery, where you can upload images and manipulate them 👋
 
 ## Stack
  - Front-end: [React](https://reactjs.org/) / [Redux](https://redux.js.org/) / [TypeScript](https://www.typescriptlang.org/) / [Sass](https://sass-lang.com/)
- - Back-end: [Express](https://expressjs.com/ru/) / [Node.js](https://nodejs.org/en/)
- - Database: [MongoDB](https://www.mongodb.com/)
+ - Back-end: [Firebase](https://firebase.google.com/?authuser=0)
  - Deployment: [GitHub Pages](https://pages.github.com/)
 
 
